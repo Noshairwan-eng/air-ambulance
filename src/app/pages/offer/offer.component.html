@@ -1,0 +1,177 @@
+<div id="wrapper">
+    <app-sidebar></app-sidebar>
+    <div id="content-wrapper">
+        <div id="content">
+            <app-topbar></app-topbar>
+            <div class="container-fluid">
+                <div class="nav" style="margin-bottom:10px;">
+                    <span><a href="offers">Offers</a></span> &nbsp; / &nbsp;<span>Offer Detail</span>
+                </div>
+                <!-- Page Heading -->
+                <h1 class="h3 mb-4 text-gray-800">{{(OfferID!="")?"Update Offer Detail":"Create new Offer"}}</h1>
+
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                Offer Detail
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label>Offer ID</label>
+                                        <input type="text" class="form-contron" disabled value="{{OfferGeneratedID}}"
+                                            class="form-control">
+                                    </div>
+                                </div>
+                                <form [formGroup]="OfferForm" (ngSubmit)="SaveOffer()" class="user">
+
+                                    <div class="row">
+                                        <div class="form-group" class="col-lg-6">
+                                            <label for="">Contact Name</label>
+                                            <input [(ngModel)]="Offer.ContactName" formControlName="ContactName"
+                                                type="text" class="form-control"
+                                                [ngClass]="{'form-submitted': formSubmitted}">
+                                        </div>
+                                        <div class="form-group" class="col-lg-6">
+                                            <label for="">Contact Number</label>
+                                            <input [(ngModel)]="Offer.ContactNumber" formControlName="ContactNumber"
+                                                type="text" class="form-control"
+                                                [ngClass]="{'form-submitted': formSubmitted}">
+                                        </div>
+                                        <div class="form-group" class="col-lg-6">
+                                            <label for="">Patient Name</label>
+                                            <input [(ngModel)]="Offer.PatientName" formControlName="PatientName"
+                                                type="text" class="form-control"
+                                                [ngClass]="{'form-submitted': formSubmitted}">
+                                        </div>
+                                        <div class="form-group" class="col-lg-6">
+                                            <label for="">AirCraft</label>
+                                            <input [(ngModel)]="Offer.AirCraft" formControlName="AirCraft" type="text"
+                                                class="form-control" [ngClass]="{'form-submitted': formSubmitted}">
+                                        </div>
+                                        <div class="form-group" class="col-lg-6">
+                                            <label for="">Crew</label>
+                                            <input [(ngModel)]="Offer.Crew" formControlName="Crew" type="text"
+                                                class="form-control" [ngClass]="{'form-submitted': formSubmitted}">
+                                        </div>
+                                        <div class="form-group" class="col-lg-6">
+                                            <label for="">Duration</label>
+                                            <input [(ngModel)]="Offer.Duration" formControlName="Duration" type="text"
+                                                class="form-control" [ngClass]="{'form-submitted': formSubmitted}">
+                                        </div>
+                                        <div class="form-group" class="col-lg-6">
+                                            <label for="">Itinerary Date</label>
+                                            <input type="date" [(ngModel)]="Offer.ItineraryDate"
+                                                formControlName="ItineraryDate" class="form-control"
+                                                [ngClass]="{'form-submitted': formSubmitted}">
+                                        </div>
+                                        <div class="form-group" class="col-lg-6">
+                                            <label for="">Pick Up</label>
+                                            <input [(ngModel)]="Offer.PickUp" formControlName="PickUp" type="text"
+                                                class="form-control" [ngClass]="{'form-submitted': formSubmitted}">
+                                        </div>
+                                        <div class="form-group" class="col-lg-6">
+                                            <label for="">Depart</label>
+                                            <input [(ngModel)]="Offer.Depart" formControlName="Depart" type="text"
+                                                class="form-control" [ngClass]="{'form-submitted': formSubmitted}">
+                                        </div>
+                                        <hr>
+
+                                        <div class="form-group" class="col-lg-12">
+                                            <label for="">Ground Charges 1 (Sending Facility to Airport)</label>
+                                            <input [(ngModel)]="Offer.GroundCharges1" formControlName="GroundCharges1"
+                                                type="text" class="form-control"
+                                                [ngClass]="{'form-submitted': formSubmitted}">
+                                        </div>
+                                        <div class="form-group" class="col-lg-12">
+                                            <label for="">Ground Charges 2 (Airport to Receiving Facility)</label>
+                                            <input [(ngModel)]="Offer.GroundCharges2" formControlName="GroundCharges2"
+                                                type="text" class="form-control"
+                                                [ngClass]="{'form-submitted': formSubmitted}">
+                                        </div>
+                                        <div class="form-group" class="col-lg-12" *ngIf="OfferID==''">
+                                            <label for="">Calculated Cost</label>
+                                            <input [(ngModel)]="CalculatedCost" formControlName="CalculatedCost"
+                                                type="text" class="form-control"
+                                                [ngClass]="{'form-submitted': formSubmitted}" readonly>
+                                        </div>
+                                        <div class="form-group" class="col-lg-12">
+                                            <label for="">Offer Amount</label>
+                                            <input [(ngModel)]="Offer.OfferAmount" formControlName="OfferAmount"
+                                                type="text" class="form-control"
+                                                [ngClass]="{'form-submitted': formSubmitted}">
+                                        </div>
+
+                                        <br>
+                                        <br>
+                                        <button *ngIf="loadingSave" style="margin-top:10px;font-size:16px" type="submit"
+                                            class="btn btn-primary btn-user btn-block" disabled>
+                                            <i style="margin-right:5px" class="fas fa-save"></i>Saving Offer
+                                        </button>
+
+                                        <button style *ngIf="!loadingSave" style="margin-top:10px;font-size:16px"
+                                            type="submit" class="btn btn-primary btn-user btn-block">
+                                            <i style="margin-right:5px"
+                                                class="fas fa-save"></i>{{(OfferID=="")?"Save":"Update"}}
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                Offer Documents
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    
+                                        <button class="btn btn-outline-primary btn-block"
+                                            (click)="OfferDocumentFile.click()">{{SelectedFileName}}</button>        
+                                        <input style="display:none;" type="file" class="form-control"
+                                            (change)="FileInputChange($event)" #OfferDocumentFile>
+                                    
+                                    <div style="margin-top:10px;margin-bottom:10px;">
+
+                                        <button  style="float:right" class="btn btn-sm btn-outline-primary" *ngIf="loadingFileUpload" disabled>
+                                            <span class="fa fa-upload"></span> Uploading ..
+                                        </button>
+                                        <button style="float:right" class="btn btn-sm btn-outline-primary" *ngIf="!loadingFileUpload"
+                                            (click)="UploadFile()">
+                                            <span class="fa fa-upload"></span> Upload
+                                        </button> 
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>File Name</th>
+                                                <th class="text-center"><span class="fa fa-trash"></span></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr  *ngFor="let ofd of OfferDocuments">
+                                                <td></td>
+                                                <td> <a href="{{ServerUrl}}/{{ofd.FileName}}"><span>{{ofd.ActualFileName}}</span></a> </td>
+                                                <td class="text-center">
+                                                    <button (click)="DeleteOfferDocument(ofd.uid)" class="btn btn-sm btn-outline-danger">
+                                                        <span class="fa fa-trash"></span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-footer></app-footer>
+    </div>
+</div>

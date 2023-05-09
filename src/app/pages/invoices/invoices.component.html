@@ -1,0 +1,87 @@
+<div id="wrapper">
+    <app-sidebar></app-sidebar>
+    <div id="content-wrapper">
+        <div id="content">
+            <app-topbar></app-topbar>
+            <div class="container-fluid">
+                <div class="nav" style="margin-bottom:10px;">
+                    <span><a href="home">Dashboard</a></span> &nbsp; / &nbsp;<span>Invoices</span>
+                </div>
+                <!-- Page Heading -->
+                <h1 class="h3 mb-4 text-gray-800">Invoices</h1>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                Search Criteria
+                            </div>
+                            <div class="card-body">
+                                <form>
+                                    <div class="row">
+                                        <div class="form-group col-lg-4">
+                                            <label for="">Offer ID</label>
+                                            <input class="form-control" name="OfferID" [(ngModel)]="S_OfferID">
+                                        </div>                                     
+                                    </div>
+                                    <div class="row">
+                                        <div class="offset-lg-10 col-lg-2">
+                                            <button (click)="GetInvoices()" style="float:right"
+                                                class="btn btn-outline-primary">
+                                                <span class="fa fa-search"></span>
+                                                Search
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                Invoices
+                            </div>
+                            <div class="card-body">
+                                <!-- <button (click)="AddAirLineCost()" style="margin-bottom:5px;width:40px;"
+                                    class="btn btn-sm btn-outline-primary"><span class="fas fa-plus"></span></button> -->
+                                <app-loader *ngIf="loadingInvoices"></app-loader>
+                                <table *ngIf="!loadingInvoices" class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Offer ID</th>
+                                            <th>Invoice #</th>
+                                            <th>Invoice Amount</th>
+                                            <th class="text-center"><span class="fas fa-edit"></span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let invoice of Invoices">
+                                            <td></td>
+                                            <td>{{invoice.OfferID}}</td>
+                                            <td>{{invoice.uid}}</td>
+                                            <td>{{invoice.InvoiceAmount}}</td>
+                                            <td class="text-center">
+                                                <a 
+                                                routerLink="/invoice/{{invoice.uid}}"
+                                                    class="btn btn-sm btn-outline-primary">
+                                                    <span class="fas fa-edit"></span>
+                                                </a>
+                                            </td>
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-footer></app-footer>
+    </div>
+</div>

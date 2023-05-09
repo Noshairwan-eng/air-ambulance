@@ -1,0 +1,148 @@
+<div id="wrapper">
+    <app-sidebar></app-sidebar>
+    <div id="content-wrapper">
+        <div id="content">
+            <app-topbar></app-topbar>
+            <div class="container-fluid">
+                <div class="nav" style="margin-bottom:10px;">
+                    <span><a href="home">Dashboard</a></span> &nbsp; / &nbsp;<span>Offers</span>
+                </div>
+                <!-- Page Heading -->
+                <h1 class="h3 mb-4 text-gray-800">Offers</h1>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                Search Criteria
+                            </div>
+                            <div class="card-body">
+                                <form>
+                                    <div class="row">
+                                        <div class="form-group col-lg-4">
+                                            <label for="">Offer ID</label>
+                                            <input class="form-control" name="OfferID" [(ngModel)]="S_OfferID"> 
+                                        </div>
+                                        <div class="form-group col-lg-4">
+                                            <label for="">Contact Name</label>
+                                            <input type="text" class="form-control" name="ContactName"
+                                                [(ngModel)]="S_ContactName">
+                                        </div>
+                                        <div class="form-group col-lg-4">
+                                            <label for="">Patient Name</label>
+                                            <input type="text" class="form-control" name="PatientName"
+                                                [(ngModel)]="S_PatientName">
+                                        </div>
+                                        <div class="form-group col-lg-4">
+                                            <label for="">Pick Up</label>
+                                            <input type="text" class="form-control" name="PickUp"
+                                                [(ngModel)]="S_PickUp">
+                                        </div>
+                                        <div class="form-group col-lg-4">
+                                            <label for="">Depart</label>
+                                            <input type="text" class="form-control" name="Depart"
+                                                [(ngModel)]="S_Depart">
+                                        </div>
+                                        <div class="form-group col-lg-4">
+                                            <label for="">Contact Number</label>
+                                            <input type="text" class="form-control" name="ContactNumber"
+                                                [(ngModel)]="S_ContactNumber">
+                                        </div>
+                                        <div class="form-group col-lg-4">
+                                            <label for="">Status</label>
+                                            <select name="" id="" class="form-control" name="Status"
+                                                [(ngModel)]="S_Status">
+                                                <option value=""></option>
+                                                <option value="0">Pending</option>
+                                                <option value="1">Offer Created</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="offset-lg-10 col-lg-2">
+                                            <button (click)="GetOffers()" style="float:right"
+                                                class="btn btn-outline-primary">
+                                                <span class="fa fa-search"></span>
+                                                Search
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                Offers
+                            </div>
+                            <div class="card-body">
+                                <!-- <button (click)="AddAirLineCost()" style="margin-bottom:5px;width:40px;"
+                                    class="btn btn-sm btn-outline-primary"><span class="fas fa-plus"></span></button> -->
+                                <app-loader *ngIf="loadingOffers"></app-loader>
+                                <table *ngIf="!loadingOffers" class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Request ID</th>
+                                            <th>Offer ID</th>
+                                            <th>Contact Name</th>
+                                            <th>Patient Name</th>
+                                            <th>Pick Up</th>
+                                            <th>Depart</th>
+                                            <th>Contact Number</th>
+                                            <th>Offer Amount</th>
+                                            <th>Status</th>
+                                            <th class="text-center"><span class="fas fa-edit"></span></th>
+                                            <th>Create Invoice</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let offer of Offers">
+                                            <td></td>
+                                            <td>{{offer.request_id}}</td>
+                                            <td>{{offer.OfferID}}</td>
+                                            <td>{{offer.ContactName}}</td>
+                                            <td>{{offer.PatientName}}</td>
+                                            <td>{{offer.PickUp}}</td>
+                                            <td>{{offer.Depart}}</td>
+                                            <td>{{offer.ContactNumber}}</td>
+                                            <td>{{offer.OfferAmount}}</td>
+                                            <td>
+                                                <span class="label label-primary"
+                                                    *ngIf="offer.Status=='0'">pending</span>
+                                                <span class="label label-primary"
+                                                    *ngIf="offer.Status=='1'">invoiced</span>
+                                                <span class="label label-primary"
+                                                    *ngIf="offer.Status=='2'">cancelled</span>
+                                            </td>
+                                            <td class="text-center">
+                                                <a 
+                                                routerLink="/offer/{{offer.uid}}"
+                                                class="btn btn-sm btn-outline-primary">
+                                                    <span class="fas fa-edit"></span>
+                                                </a>
+                                            </td>
+                                            <td class="text-center">
+                                                <a *ngIf="offer.Status=='0'" (click)="CreateInvoice(offer)"
+                                                    class="btn btn-sm btn-outline-primary">
+                                                    <span class="fas fa-file"></span>
+
+                                                </a>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-footer></app-footer>
+    </div>
+</div>

@@ -1,0 +1,170 @@
+<div id="wrapper">
+    <app-sidebar></app-sidebar>
+    <div id="content-wrapper">
+        <div id="content" >
+            <app-topbar></app-topbar>
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <h1 class="h3 mb-4 text-gray-800">Dashboard</h1>
+
+                <div class="row">
+
+                    <!-- Earnings (Monthly) Card Example -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            Total Invoiced</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            ${{DashboardData.INVOICE_AMOUNT | number:'.2-2'}}</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Earnings (Monthly) Card Example -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                            Total Offers</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            {{DashboardData.TOTAL_OFFERS}}</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Pending Requests Card Example -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-warning shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                            Total Requests</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            {{DashboardData.TOTAL_REQUESTS}}</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pending Requests Card Example -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-warning shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                            Pending Requests</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            {{DashboardData.PENDING_REQUESTS}}</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page Heading -->
+                <h1 class="h3 mb-4 text-gray-800">Quick Links</h1>
+
+                <div class="row">
+                    <div class="col-lg-6 mb-4" style="cursor:pointer" routerLink="/request">
+                        <div class="card bg-primary text-white shadow">
+                            <div class="card-body">
+                                <span class="fa fa-edit"></span>
+                                Create Request
+                                <!-- <div class="text-white-50 small">var(--primary)</div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-4"  style="cursor:pointer" routerLink="/requests">
+                        <div class="card bg-success text-white shadow">
+                            <div class="card-body">
+                                <span class="fa fa-search"></span>
+                                Search Requests
+                                <!-- <div class="text-white-50 small">#1cc88a</div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-4"  style="cursor:pointer" routerLink="/offers">
+                        <div class="card bg-warning text-white shadow">
+                            <div class="card-body">
+                                <span class="fa fa-search"></span>
+                                Search Offers
+                                <!-- <div class="text-white-50 small">#f6c23e</div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-4"  style="cursor:pointer" routerLink="/invoices">
+                        <div class="card bg-danger text-white shadow">
+                            <div class="card-body">
+                                <span class="fa fa-search"></span>
+                                Search Invoices
+                                <!-- <div class="text-white-50 small">#e74a3b</div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-4"  style="cursor:pointer" routerLink="/suppliers">
+                        <div class="card bg-danger text-white shadow">
+                            <div class="card-body">
+                                <span class="fa fa-search"></span>
+                                Suppliers
+                                <!-- <div class="text-white-50 small">#e74a3b</div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-lg-6 mb-4">
+                        <div class="card bg-secondary text-white shadow">
+                            <div class="card-body">
+                                Secondary
+                                <div class="text-white-50 small">#858796</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                        <div class="card bg-light text-black shadow">
+                            <div class="card-body">
+                                Light
+                                <div class="text-black-50 small">#f8f9fc</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                        <div class="card bg-dark text-white shadow">
+                            <div class="card-body">
+                                Dark
+                                <div class="text-white-50 small">#5a5c69</div>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+
+            </div>
+        </div>
+        <app-footer></app-footer>
+    </div>
+</div>

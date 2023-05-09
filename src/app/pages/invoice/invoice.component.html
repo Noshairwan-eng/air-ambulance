@@ -1,0 +1,66 @@
+<div id="wrapper">
+    <app-sidebar></app-sidebar>
+    <div id="content-wrapper">
+        <div id="content">
+            <app-topbar></app-topbar>
+            <div class="container-fluid">
+                <div class="nav" style="margin-bottom:10px;">
+                    <span><a href="invoices">Invoices</a></span> &nbsp; / &nbsp;<span>Invoice Detail</span>
+                </div>
+                <!-- Page Heading -->
+                <h1 class="h3 mb-4 text-gray-800">{{(InvoiceID!="")?"Update Invoice Detail":"Create new Invoice"}}</h1>
+
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                Invoice Detail
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label>Invoice Number</label>
+                                        <input type="text" class="form-contron" disabled value="{{Invoice.uid}}"
+                                            class="form-control">
+                                    </div>
+                                </div>
+                                <form [formGroup]="InvoiceForm" (ngSubmit)="SaveInvoice()" class="user">
+
+                                    <div class="row">
+                                        <div class="form-group" class="col-lg-6">
+                                            <label for="">Payment Method</label>
+                                            <input [(ngModel)]="Invoice.PaymentMethod" formControlName="PaymentMethod"
+                                                type="text" class="form-control"
+                                                [ngClass]="{'form-submitted': formSubmitted}">
+                                        </div>
+                                        <div class="form-group" class="col-lg-6">
+                                            <label for="">Invoice Amount</label>
+                                            <input [(ngModel)]="Invoice.InvoiceAmount" formControlName="InvoiceAmount"
+                                                type="text" class="form-control"
+                                                [ngClass]="{'form-submitted': formSubmitted}" readonly>
+                                        </div>
+
+
+                                        <br>
+                                        <br>
+                                        <button *ngIf="loadingSave" style="margin-top:10px;font-size:16px" type="submit"
+                                            class="btn btn-primary btn-user btn-block" disabled>
+                                            <i style="margin-right:5px" class="fas fa-save"></i>Saving Invoice
+                                        </button>
+
+                                        <button style *ngIf="!loadingSave" style="margin-top:10px;font-size:16px"
+                                            type="submit" class="btn btn-primary btn-user btn-block">
+                                            <i style="margin-right:5px"
+                                                class="fas fa-save"></i>{{(InvoiceID=="")?"Save":"Update"}}
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-footer></app-footer>
+    </div>
+</div>

@@ -1,0 +1,103 @@
+<div id="wrapper">
+    <app-sidebar></app-sidebar>
+    <div id="content-wrapper">
+        <div id="content">
+            <app-topbar></app-topbar>
+            <div class="container-fluid">
+                <div class="nav" style="margin-bottom:10px;">
+                    <span><a routerLink="/home">Dashboard</a></span> &nbsp; / &nbsp;<span>Airports</span>
+                </div>
+                <!-- Page Heading -->
+                <h1 class="h3 mb-4 text-gray-800">Airports</h1>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                Search Criteria
+                            </div>
+                            <div class="card-body">
+                                <form>
+                                    <div class="row">
+                                        <div class="form-group col-lg-4">
+                                            <label for="">ICAO Code</label>
+                                            <input class="form-control" name="OfferID" [(ngModel)]="S_ICAOCode"> 
+                                        </div>
+                                        <div class="form-group col-lg-4">
+                                            <label for="">IATA Code</label>
+                                            <input type="text" class="form-control" name="IATACode" [(ngModel)]="S_IATACode">
+                                        </div>
+                                        <div class="form-group col-lg-4">
+                                            <label for="">Airport Name</label>
+                                            <input type="text" class="form-control" name="AirportName" [(ngModel)]="S_AirportName">
+                                        </div>
+                                        <div class="form-group col-lg-4">
+                                            <label for="">City</label>
+                                            <input type="text" class="form-control" name="City" [(ngModel)]="S_City">
+                                        </div>
+                                        <div class="form-group col-lg-4">
+                                            <label for="">Country</label>
+                                            <input type="text" class="form-control" name="Country" [(ngModel)]="S_Country">
+                                        </div>                                      
+                                    </div>
+                                    <div class="row">
+                                        <div class="offset-lg-10 col-lg-2">
+                                            <button (click)="GetAirports()" style="float:right"
+                                                class="btn btn-outline-primary">
+                                                <span class="fa fa-search"></span>
+                                                Search
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                Airports
+                            </div>
+                            <div class="card-body">
+                                <!-- <button (click)="AddAirLineCost()" style="margin-bottom:5px;width:40px;"
+                                    class="btn btn-sm btn-outline-primary"><span class="fas fa-plus"></span></button> -->
+                                <app-loader *ngIf="loadingAirports"></app-loader>
+                                <table *ngIf="!loadingAirports" class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>ICAO</th>
+                                            <th>IATA</th>
+                                            <th>Airport Name</th>
+                                            <th>City</th>
+                                            <th>Country</th>
+                                            <th>Lat</th>
+                                            <th>Long</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let airport of Airports">
+                                            <td></td>
+                                            <td>{{airport.ICAOCode}}</td>
+                                            <td>{{airport.IATACode}}</td>
+                                            <td>{{(airport.AirportName=="N/A")?airport.City+", "+airport.Country : airport.AirportName}}</td>
+                                            <td>{{airport.City}}</td>
+                                            <td>{{airport.Country}}</td>
+                                            <td>{{airport.LatitudeDecimalDegrees}}</td>                                            
+                                            <td>{{airport.LongitudeDecimalDegrees}}</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-footer></app-footer>
+    </div>
+</div>
