@@ -45,7 +45,7 @@
                                                 formControlName="ServiceType" class="form-control"
                                                 [ngClass]="{'form-submitted': formSubmitted}">
                                                 <option value=""></option>
-                                                <option value="Air Ambulance"> Air Ambulance</option>
+                                                <option value="Air Ambulance" selected> Air Ambulance</option>
                                                 <option value="Com Stretcher"> Com Stretcher</option>
                                                 <option value="Med Escort"> Med Escort</option>
                                             </select>
@@ -199,17 +199,18 @@
                             <div class="card-body">
                                 <button (click)="AddAirLineCost()" style="margin-bottom:5px;width:40px;"
                                     class="btn btn-sm btn-outline-primary"><span class="fas fa-plus"></span></button>
-                                    &nbsp;
-                                    <button class="btn btn-sm btn-primary" (click)="showEmailSupplierModal()">Email Supplier for Cost</button>
+                                &nbsp;
+                                <button style="margin-bottom:5px;" class="btn btn-sm btn-primary"
+                                    (click)="showEmailSupplierModal()">Email Supplier for Cost</button>
                                 <table *ngIf="!loadingAirLineCosts" class="table table-hover">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Request ID</th>
-                                            <th>Company Name</th>
-                                            <th>Air Craft</th>
+                                            <th>RQID</th>
+                                            <th>Company</th>
+                                            <th>Craft</th>
                                             <th>Price</th>
-                                            <th>Sell For</th>
+                                            <th>Sell</th>
                                             <th class="text-center"><span class="fas fa-edit"></span></th>
                                             <th class="text-center"><span class="fas fa-trash"></span></th>
                                             <th class="text-center"><span class="fas fa-check"></span></th>
@@ -578,23 +579,28 @@
 
                     <div class="form-group">
                         <label for="">Email To</label>
-                        <input type="text" [(ngModel)]="EmailSupplier.EmailBody" formControlName="EmailBody" name=""
+                        <input type="text" [(ngModel)]="EmailSupplier.EmailTo" formControlName="EmailTo" name=""
                             class="form-control" [ngClass]="{'form-submitted': emailSupplierFormSubmitted}">
-                            <label for="">Flying From</label>
+                        <label for="">Flying From</label>
                         <input type="text" [(ngModel)]="EmailSupplier.FlyingFrom" formControlName="FlyingFrom" name=""
-                            class="form-control" [ngClass]="{'form-submitted': emailSupplierFormSubmitted}">
-                            <label for="">Flying To</label>
+                            class="form-control" [ngClass]="{'form-submitted': emailSupplierFormSubmitted}" readonly>
+                        <label for="">Flying To</label>
                         <input type="text" [(ngModel)]="EmailSupplier.FlyingTo" formControlName="FlyingTo" name=""
-                            class="form-control" [ngClass]="{'form-submitted': emailSupplierFormSubmitted}">
+                            class="form-control" [ngClass]="{'form-submitted': emailSupplierFormSubmitted}" readonly>
                         <label for="">Email Body</label>
                         <textarea [(ngModel)]="EmailSupplier.EmailBody" formControlName="EmailBody" name="" id=""
-                            cols="30" rows="10" class="form-control"
+                            cols="30" rows="6" class="form-control"
                             [ngClass]="{'form-submitted': emailSupplierFormSubmitted}"></textarea>
                     </div>
                 </div>
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-outline-primary btn-sm">Submit</button>
+                    <button *ngIf="loadingSendSupplierEmail" style="font-size:16px" type="submit"
+                        class="btn btn-outline-primary btn-sm" disabled>
+                        Sending Email
+                    </button>
+                    <button *ngIf="!loadingSendSupplierEmail" type="submit" class="btn btn-outline-primary btn-sm">Send
+                        Email</button>
 
                     <!-- this button is hidden, used to close from typescript -->
                     <button class="btn btn-outline-danger btn-sm" type="button" id="email-supplier-close-modal"

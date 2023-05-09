@@ -23,17 +23,17 @@ export class RequestService {
     CallerName: string,
     CallerEmail: string,
     CallerPhone: string,
-    Status:string,
+    Status: string,
   ) {
     let url = this.URL + "get.php?";
 
-    url = url + "token="+this.token.GetTokenObject().token + "&";
+    url = url + "token=" + this.token.GetTokenObject().token + "&";
     // Attaching Search Params
     url = url + "ServiceType=" + ServiceType + "&";
-    url = url + "FlyingFrom=" + FlyingFrom +  "&";
-    url = url + "FlyingTo=" + FlyingTo +  "&";
+    url = url + "FlyingFrom=" + FlyingFrom + "&";
+    url = url + "FlyingTo=" + FlyingTo + "&";
     url = url + "PatientName=" + PatientName + "&";
-    url = url + "CallerName=" + CallerName+  "&";
+    url = url + "CallerName=" + CallerName + "&";
     url = url + "CallerEmail=" + CallerEmail + "&";
     url = url + "CallerPhone=" + CallerPhone + "&";
     url = url + "Status=" + Status;
@@ -103,6 +103,20 @@ export class RequestService {
     let url = this.URL + "get.php?" + "uid=" + RequestID + "&token=" + this.token.GetTokenObject().token;
     //console.log("URL",url);
     return this.http.get<any>(url);
+  }
+
+
+  SendSupplierEmail(Email: string, FlyingFrom: string, FlyingTo: string, EmailBody: string) {
+    let url = this.URL + "sendSupplierEmail.php?" + 
+    "Email=" + Email + "&" +
+    "FlyingFrom=" + FlyingFrom +  "&" +
+    "FlyingTo=" + FlyingTo +  "&" +
+    "EmailBody=" + EmailBody +  "&" +
+    "token=" + this.token.GetTokenObject().token;
+
+    console.log("URL",url);
+    return this.http.get<any>(url);
+
   }
 
 }

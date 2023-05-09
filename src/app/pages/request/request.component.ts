@@ -53,6 +53,7 @@ export class RequestComponent implements OnInit {
   loadingEquipmentsSave: boolean = false;
   loadingProgressNotesSave: boolean = false;
   loadingAirports: boolean = false;
+  loadingSendSupplierEmail: boolean = false;
 
   // Input Focus Flags
   IsFlyingFromFocused: boolean = false;
@@ -72,7 +73,7 @@ export class RequestComponent implements OnInit {
   ProgressNotes: Array<any> = [];
   CurrentProgressNote: any = {};
   Airports: Array<any> = [];
-  EmailSupplier:any = {};
+  EmailSupplier: any = {};
 
   FilteredAirportsFrom: Array<any> = [];
   FilteredAirportsTo: Array<any> = [];
@@ -112,6 +113,7 @@ export class RequestComponent implements OnInit {
     }
     else {
       this.RequestID = "";
+      this.RequestDetail.ServiceType = "Air Ambulance"
     }
 
   }
@@ -188,6 +190,7 @@ export class RequestComponent implements OnInit {
             var InsertedID = res.data;
 
             Swal.fire("Request Saved", "Request data saved succcessfully.", "success");
+
             if (this.RequestID == "" || this.RequestID == null) {
               this.router.navigate(['request', InsertedID]);
             }
@@ -587,7 +590,7 @@ export class RequestComponent implements OnInit {
 
   //#region Handling Aiports and Suggestions
 
-  GetAirports(AirportName: string, ListType:string) {
+  GetAirports(AirportName: string, ListType: string) {
     this.loadingAirports = true;
 
     //console.log("getting airports");
@@ -595,12 +598,10 @@ export class RequestComponent implements OnInit {
       .subscribe((res: any) => {
         if (res.status == "success") {
           //this.Airports = res.data;
-          if(ListType=="from")
-          {
+          if (ListType == "from") {
             this.FilteredAirportsFrom = res.data;
           }
-          else if(ListType=="to")
-          {
+          else if (ListType == "to") {
             this.FilteredAirportsTo = res.data;
           }
           console.log("fetched");
@@ -633,7 +634,7 @@ export class RequestComponent implements OnInit {
     //     airport.ICAOCode.toLowerCase().startsWith(inputValue.toLowerCase())
     //   );
     // });
-    this.GetAirports(inputValue,"from");
+    this.GetAirports(inputValue, "from");
 
   }
   FlyingToInputChange(event: any) {
@@ -647,7 +648,7 @@ export class RequestComponent implements OnInit {
     //     airport.ICAOCode.toLowerCase().startsWith(inputValue.toLowerCase())
     //   );
     // });
-    this.GetAirports(inputValue,"to");
+    this.GetAirports(inputValue, "to");
   }
   //#endregion
 
@@ -698,7 +699,7 @@ export class RequestComponent implements OnInit {
       Description: [null, Validators.required]
     });
 
-    
+
 
     this.EmailSupplierForm = this.formBuidler.group({
       EmailTo: [null, Validators.required],
@@ -807,8 +808,38 @@ export class RequestComponent implements OnInit {
     this.showProgressNotes = false;
   }
 
-  SendSupplierEmail()
-  {
+  SendSupplierEmail() {
+
+    console.log("Testin");
+    this.emailSupplierFormSubmitted = true;
+    if (this.EmailSupplierForm.valid) {
+      this.loadingSendSupplierEmail = true;
+
+      var tempFormData = this.EmailSupplierForm.value;
+      let Email = tempFormData.EmailTo;
+      let FlyingFrom = tempFormData.FlyingFrom;
+      let FlyingTo = tempFormData.FlyingTo;
+      let EmailBody = tempFormData.EmailBody;
+
+
+      this.requestService.SendSupplierEmail(Email, FlyingFrom, FlyingTo, EmailBody)
+      .subscribe((res:any)=>{
+        console.log("my res", res);
+        if(res.status=="success")
+        {
+          Swal.fire("Email Sent", "Email is sent to supplier.", "success");
+          this.EmailSupplierForm.reset();
+        }
+        else
+        {
+
+          Swal.fire("Process Failed", "Failed to send email." , "error");
+          this.hideEmailSupplierModal();
+        }
+        this.emailSupplierFormSubmitted = false;
+        this.loadingSendSupplierEmail = false;
+      })
+    }
 
   }
 
