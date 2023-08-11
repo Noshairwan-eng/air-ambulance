@@ -23,6 +23,7 @@ import { FlightwareComponent } from './pages/flightware/flightware.component';
 import { AirportsComponent } from './pages/airports/airports.component';
 import { AirportSuggestionComponent } from './common/airport-suggestion/airport-suggestion.component';
 import { CustomersComponent } from './pages/customers/customers.component';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { CustomersComponent } from './pages/customers/customers.component';
     FlightwareComponent,
     AirportsComponent,
     AirportSuggestionComponent,
-    CustomersComponent    
+    CustomersComponent,
+    SettingsComponent    
   ],
   imports: [
     BrowserModule,

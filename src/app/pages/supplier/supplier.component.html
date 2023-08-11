@@ -5,10 +5,10 @@
             <app-topbar></app-topbar>
             <div class="container-fluid">
                 <div class="nav" style="margin-bottom:10px;">
-                    <span><a href="suppliers">Suppliers</a></span> &nbsp; / &nbsp;<span>Supplier Detail</span>
+                    <span><a href="suppliers">Vendords</a></span> &nbsp; / &nbsp;<span>Vendors Detail</span>
                 </div>
                 <!-- Page Heading -->
-                <h1 class="h3 mb-4 text-gray-800">{{(SupplierID!="")?"Update Supplier Detail":"Create new Supplier"}}
+                <h1 class="h3 mb-4 text-gray-800">{{(SupplierID!="")?"Update Vendor Detail":"Create new Vendor"}}
                 </h1>
 
 
@@ -18,13 +18,13 @@
                         <!-- Default Card Example -->
                         <div class="card mb-4">
                             <div class="card-header">
-                                Supplier Information
+                                Vendor Information
                             </div>
                             <div class="card-body">
                                 <form [formGroup]="SupplierForm" (ngSubmit)="SaveSupplier()" class="user">
                                     <div class="row">
                                         <div class="form-group" class="col-lg-6">
-                                            <label for="">Supplier Name</label>
+                                            <label for="">Vendor Name</label>
                                             <input [(ngModel)]="Supplier.SupplierName" formControlName="SupplierName"
                                                 type="text" class="form-control"
                                                 [ngClass]="{'form-submitted': formSubmitted}">
@@ -65,7 +65,7 @@
                                     <br>
                                     <button *ngIf="loadingSave" style="font-size:16px" type="submit"
                                         class="btn btn-primary btn-user btn-block" disabled>
-                                        <i style="margin-right:5px" class="fas fa-save"></i>Saving Supplier
+                                        <i style="margin-right:5px" class="fas fa-save"></i>Saving Vendor
                                     </button>
                                     <button *ngIf="!loadingSave" style="font-size:16px" type="submit"
                                         class="btn btn-primary btn-user btn-block">

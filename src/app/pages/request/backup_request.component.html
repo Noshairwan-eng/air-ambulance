@@ -9,7 +9,7 @@
                 </div>
                 <!-- Page Heading -->
                 <h1 class="h3 mb-4 text-gray-800">{{(RequestID!="")?"Update Request Detail":"Create new Request"}}</h1>
-                <div class="row" style="display:none;margin-bottom:10px;">
+                <div class="row" style="margin-bottom:10px;">
                     <button (click)="SelectCard('basicInformation')"
                         class="btn btn-{{(showBasicInformation?'':'outline-')}}primary" style="margin-right:10px;">
                         <span class="fas fa-check" *ngIf="showBasicInformation"></span> Basic Information</button>
@@ -29,185 +29,157 @@
                 </div>
 
                 <div class="row">
-                    <form [formGroup]="RequestForm" (ngSubmit)="SaveRequest()" class="user">
 
-                        <div class="row">
-                            <div class="offset-lg-9 col-lg-3">
-                                <button *ngIf="loadingSave" style="font-size:16px" type="submit"
-                                    class="btn btn-primary btn-user btn-block" disabled>
-                                    <i style="margin-right:5px" class="fas fa-save"></i>Saving Request Data
-                                </button>
-                                <button *ngIf="!loadingSave" style="font-size:16px" type="submit"
-                                    class="btn btn-primary btn-user btn-block">
-                                    <i style="margin-right:5px"
-                                        class="fas fa-save"></i>{{(RequestID=="")?"Save":"Update"}}
-                                </button>
+                    <div class="col-lg-8" *ngIf="showBasicInformation">
+                        <!-- Default Card Example -->
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                Request Information
                             </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <!-- BASIC INFORMATION -->
-                            <div class="col-lg-12">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        Basic Information
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="form-group" class="col-lg-4">
-                                                <label for="">Service Type</label>
-                                                <select [(ngModel)]="RequestDetail.ServiceType"
-                                                    formControlName="ServiceType" class="form-control"
-                                                    [ngClass]="{'form-submitted': formSubmitted}">
-                                                    <option value=""></option>
-                                                    <option value="Air Ambulance" selected> Air Ambulance</option>
-                                                    <option value="Com Stretcher"> Com Stretcher</option>
-                                                    <option value="Med Escort"> Med Escort</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group" class="col-lg-4">
-                                                <label for="">Flying From</label>
-                                                <input [(ngModel)]="RequestDetail.FlyingFrom"
-                                                    formControlName="FlyingFrom" type="text" class="form-control"
-                                                    [ngClass]="{'form-submitted': formSubmitted}"
-                                                    (keyup)="FlyingFromInputChange($event)">
-                                                <app-airport-suggestion *ngIf="IsFlyingFromFocused"
-                                                    [filteredAirports]="FilteredAirportsFrom"
-                                                    (AirportSelected)="SelectAirportFrom($event)"
-                                                    style="height:200px;display:block;overflow-y:scroll;">
-                                                </app-airport-suggestion>
-                                            </div>
-                                            <div class="form-group" class="col-lg-4">
-                                                <label for="">Flying To</label>
-                                                <input [(ngModel)]="RequestDetail.FlyingTo" formControlName="FlyingTo"
-                                                    type="text" class="form-control"
-                                                    [ngClass]="{'form-submitted': formSubmitted}"
-                                                    (keyup)="FlyingToInputChange($event)">
-                                                <app-airport-suggestion *ngIf="IsFlyingToFocused"
-                                                    [filteredAirports]="FilteredAirportsTo"
-                                                    (AirportSelected)="SelectAirportTo($event)"
-                                                    style="height:200px;display:block;overflow-y:scroll;">
-                                                </app-airport-suggestion>
-                                            </div>
+                            <div class="card-body">
+                                <form [formGroup]="RequestForm" (ngSubmit)="SaveRequest()" class="user">
+                                    <div class="row">
+                                        <div class="form-group" class="col-lg-12">
+                                            <label for="">Service Type</label>
+                                            <select [(ngModel)]="RequestDetail.ServiceType"
+                                                formControlName="ServiceType" class="form-control"
+                                                [ngClass]="{'form-submitted': formSubmitted}">
+                                                <option value=""></option>
+                                                <option value="Air Ambulance" selected> Air Ambulance</option>
+                                                <option value="Com Stretcher"> Com Stretcher</option>
+                                                <option value="Med Escort"> Med Escort</option>
+                                            </select>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <!-- CALLER INFORMATION -->
-                            <div class="col-lg-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        Caller Information
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="form-group" class="col-lg-4">
-                                                <label for="">Caller Name</label>
-                                                <input [(ngModel)]="RequestDetail.CallerName"
-                                                    formControlName="CallerName" type="text" class="form-control"
-                                                    [ngClass]="{'form-submitted': formSubmitted}">
-                                            </div>
-                                            <div class="form-group" class="col-lg-4">
-                                                <label for="">Caller Fax</label>
-                                                <input [(ngModel)]="RequestDetail.CallerFax" formControlName="CallerFax"
-                                                    type="text" class="form-control"
-                                                    [ngClass]="{'form-submitted': formSubmitted}">
-                                            </div>
-                                            <div class="form-group" class="col-lg-4">
-                                                <label for="">Caller Email</label>
-                                                <input [(ngModel)]="RequestDetail.CallerEmail"
-                                                    formControlName="CallerEmail" type="text" class="form-control"
-                                                    [ngClass]="{'form-submitted': formSubmitted}">
-                                            </div>
-                                            <div class="form-group" class="col-lg-4">
-                                                <label for="">Caller Phone</label>
-                                                <input [(ngModel)]="RequestDetail.CallerPhone"
-                                                    formControlName="CallerPhone" type="text" class="form-control"
-                                                    [ngClass]="{'form-submitted': formSubmitted}">
-                                            </div>
-                                            <div class="form-group" class="col-lg-4">
-                                                <label for="">Relation</label>
-                                                <input [(ngModel)]="RequestDetail.CallerRelation"
-                                                    formControlName="CallerRelation" type="text" class="form-control"
-                                                    [ngClass]="{'form-submitted': formSubmitted}">
-                                            </div>
+                                        <div class="form-group" class="col-lg-6">
+                                            <label for="">Flying From</label>
+                                            <input [(ngModel)]="RequestDetail.FlyingFrom" formControlName="FlyingFrom"
+                                                type="text" class="form-control"
+                                                [ngClass]="{'form-submitted': formSubmitted}"
+                                                (keyup)="FlyingFromInputChange($event)">
+                                            <app-airport-suggestion *ngIf="IsFlyingFromFocused"
+                                                [filteredAirports]="FilteredAirportsFrom"
+                                                (AirportSelected)="SelectAirportFrom($event)"
+                                                style="height:200px;display:block;overflow-y:scroll;">
+                                            </app-airport-suggestion>
                                         </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <!-- PATIENT INFORMATION -->
-                            <div class="col-lg-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        Patients Information
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="form-group" class="col-lg-4">
-                                                <label for="">Patient Name</label>
-                                                <input [(ngModel)]="RequestDetail.PatientName"
-                                                    formControlName="PatientName" type="text" class="form-control"
-                                                    [ngClass]="{'form-submitted': formSubmitted}">
-                                            </div>
-                                            <div class="form-group" class="col-lg-4">
-                                                <label for="">Patient Age</label>
-                                                <input [(ngModel)]="RequestDetail.PatientAge"
-                                                    formControlName="PatientAge" type="text" class="form-control"
-                                                    [ngClass]="{'form-submitted': formSubmitted}">
-                                            </div>
-                                            <div class="form-group" class="col-lg-4">
-                                                <label for="">Patient Weight</label>
-                                                <input [(ngModel)]="RequestDetail.PatientWeight"
-                                                    formControlName="PatientWeight" type="text" class="form-control"
-                                                    [ngClass]="{'form-submitted': formSubmitted}">
-                                            </div>
-                                            <div class="form-group" class="col-lg-4">
-                                                <label for="">No of Passengers</label>
-                                                <input [(ngModel)]="RequestDetail.NoOfPassengers"
-                                                    formControlName="NoOfPassengers" type="text" class="form-control"
-                                                    [ngClass]="{'form-submitted': formSubmitted}">
-                                            </div>
-                                            <div class="form-group" class="col-lg-4">
-                                                <label for="">Referred By</label>
-                                                <input [(ngModel)]="RequestDetail.ReferredBy"
-                                                    formControlName="ReferredBy" type="text" class="form-control"
-                                                    [ngClass]="{'form-submitted': formSubmitted}">
-                                            </div>
-                                            <div class="form-group" class="col-lg-4">
-                                                <label for="">Reason for Transport</label>
-                                                <input [(ngModel)]="RequestDetail.ReasonForTransport"
-                                                    formControlName="ReasonForTransport" type="text"
-                                                    class="form-control" [ngClass]="{'form-submitted': formSubmitted}">
-                                            </div>
-                                            <div class="form-group" class="col-lg-12">
-                                                <label for="">Medical Briefing</label>
-                                                <textarea class="form-control"
-                                                    [(ngModel)]="RequestDetail.MedicalBriefing"
-                                                    formControlName="MedicalBriefing" name="" id="" cols="30" rows="5"
-                                                    [ngClass]="{'form-submitted': formSubmitted}"></textarea>
-                                            </div>
-
+                                        <div class="form-group" class="col-lg-6">
+                                            <label for="">Flying To</label>
+                                            <input [(ngModel)]="RequestDetail.FlyingTo" formControlName="FlyingTo"
+                                                type="text" class="form-control"
+                                                [ngClass]="{'form-submitted': formSubmitted}"
+                                                (keyup)="FlyingToInputChange($event)">
+                                            <app-airport-suggestion *ngIf="IsFlyingToFocused"
+                                                [filteredAirports]="FilteredAirportsTo"
+                                                (AirportSelected)="SelectAirportTo($event)"
+                                                style="height:200px;display:block;overflow-y:scroll;">
+                                            </app-airport-suggestion>
                                         </div>
+                                        <div class="form-group" class="col-lg-6">
+                                            <label for="">Caller Name</label>
+                                            <input [(ngModel)]="RequestDetail.CallerName" formControlName="CallerName"
+                                                type="text" class="form-control"
+                                                [ngClass]="{'form-submitted': formSubmitted}">
+                                        </div>
+                                        <div class="form-group" class="col-lg-6">
+                                            <label for="">Caller Fax</label>
+                                            <input [(ngModel)]="RequestDetail.CallerFax" formControlName="CallerFax"
+                                                type="text" class="form-control"
+                                                [ngClass]="{'form-submitted': formSubmitted}">
+                                        </div>
+                                        <div class="form-group" class="col-lg-6">
+                                            <label for="">Caller Email</label>
+                                            <input [(ngModel)]="RequestDetail.CallerEmail" formControlName="CallerEmail"
+                                                type="text" class="form-control"
+                                                [ngClass]="{'form-submitted': formSubmitted}">
+                                        </div>
+                                        <div class="form-group" class="col-lg-6">
+                                            <label for="">Caller Phone</label>
+                                            <input [(ngModel)]="RequestDetail.CallerPhone" formControlName="CallerPhone"
+                                                type="text" class="form-control"
+                                                [ngClass]="{'form-submitted': formSubmitted}">
+                                        </div>
+                                        <div class="form-group" class="col-lg-6">
+                                            <label for="">Caller Relation with Patient</label>
+                                            <input [(ngModel)]="RequestDetail.CallerRelation"
+                                                formControlName="CallerRelation" type="text" class="form-control"
+                                                [ngClass]="{'form-submitted': formSubmitted}">
+                                        </div>
+                                        <div class="form-group" class="col-lg-6">
+                                            <label for="">Patient Name</label>
+                                            <input [(ngModel)]="RequestDetail.PatientName" formControlName="PatientName"
+                                                type="text" class="form-control"
+                                                [ngClass]="{'form-submitted': formSubmitted}">
+                                        </div>
+                                        <div class="form-group" class="col-lg-6">
+                                            <label for="">Patient Age</label>
+                                            <input [(ngModel)]="RequestDetail.PatientAge" formControlName="PatientAge"
+                                                type="text" class="form-control"
+                                                [ngClass]="{'form-submitted': formSubmitted}">
+                                        </div>
+                                        <div class="form-group" class="col-lg-6">
+                                            <label for="">Patient Weight</label>
+                                            <input [(ngModel)]="RequestDetail.PatientWeight"
+                                                formControlName="PatientWeight" type="text" class="form-control"
+                                                [ngClass]="{'form-submitted': formSubmitted}">
+                                        </div>
+                                        <div class="form-group" class="col-lg-6">
+                                            <label for="">No of Passengers</label>
+                                            <input [(ngModel)]="RequestDetail.NoOfPassengers"
+                                                formControlName="NoOfPassengers" type="text" class="form-control"
+                                                [ngClass]="{'form-submitted': formSubmitted}">
+                                        </div>
+                                        <div class="form-group" class="col-lg-6">
+                                            <label for="">Referred By</label>
+                                            <input [(ngModel)]="RequestDetail.ReferredBy" formControlName="ReferredBy"
+                                                type="text" class="form-control"
+                                                [ngClass]="{'form-submitted': formSubmitted}">
+                                        </div>
+                                        <div class="form-group" class="col-lg-6">
+                                            <label for="">Reason for Transport</label>
+                                            <input [(ngModel)]="RequestDetail.ReasonForTransport"
+                                                formControlName="ReasonForTransport" type="text" class="form-control"
+                                                [ngClass]="{'form-submitted': formSubmitted}">
+                                        </div>
+                                        <div class="form-group" class="col-lg-12">
+                                            <label for="">Medical Briefing</label>
+                                            <textarea class="form-control" [(ngModel)]="RequestDetail.MedicalBriefing"
+                                                formControlName="MedicalBriefing" name="" id="" cols="30" rows="5"
+                                                [ngClass]="{'form-submitted': formSubmitted}"></textarea>
+                                        </div>
+
                                     </div>
-                                </div>
+                                    <!-- <div class="form-group">
+                                        <div class="custom-control custom-checkbox small">
+                                            <input type="checkbox" class="custom-control-input" id="customCheck"  >
+                                            <label class="custom-control-label" for="customCheck">Remember
+                                                Me</label>
+                                        </div>
+                                    </div> -->
+                                    <br>
+                                    <button *ngIf="loadingSave" style="font-size:16px" type="submit"
+                                        class="btn btn-primary btn-user btn-block" disabled>
+                                        <i style="margin-right:5px" class="fas fa-save"></i>Saving Request Data
+                                    </button>
+                                    <button *ngIf="!loadingSave" style="font-size:16px" type="submit"
+                                        class="btn btn-primary btn-user btn-block">
+                                        <i style="margin-right:5px"
+                                            class="fas fa-save"></i>{{(RequestID=="")?"Save":"Update"}}
+                                    </button>
+
+                                </form>
 
                             </div>
                         </div>
+                    </div>
 
-                    </form>
-                    <div class="col-lg-12" *ngIf="RequestID==''">
+                    <div class="col-lg-8" *ngIf="RequestID=='' && !showBasicInformation">
                         <div class="mb-4">
                             <div class="card border-left-warning shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Please save request first to add further information</div>
+                                                Please save request first</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-warning fa-2x text-gray-300"></i>
@@ -219,7 +191,7 @@
 
                     </div>
 
-                    <div class="col-lg-7" *ngIf="RequestID!=''">
+                    <div class="col-lg-8" *ngIf="RequestID!='' && showAirlineCost">
                         <div class="card mb-4">
                             <div class="card-header">
                                 Air Line Costs
@@ -230,7 +202,7 @@
                                 &nbsp;
                                 <button style="margin-bottom:5px;" class="btn btn-sm btn-primary"
                                     (click)="showEmailSupplierModal()">Email Supplier for Cost</button>
-                                <table *ngIf="!loadingAirLineCosts" class="table table-hover" style="font-size:14px;">
+                                <table *ngIf="!loadingAirLineCosts" class="table table-hover">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -273,7 +245,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-5" *ngIf="RequestID!=''">
+                    <div class="col-lg-8" *ngIf="RequestID!='' && showEquipments">
                         <div class="card mb-4">
                             <div class="card-header">
                                 Equipments
@@ -281,11 +253,11 @@
                             <div class="card-body">
                                 <button (click)="AddEquipments()" style="margin-bottom:5px;width:40px;"
                                     class="btn btn-sm btn-outline-primary"><span class="fas fa-plus"></span></button>
-                                <table *ngIf="!loadingEquipments" class="table table-hover" style="font-size:14px;">
+                                <table *ngIf="!loadingEquipments" class="table table-hover">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Name</th>
+                                            <th>Equipment Name</th>
                                             <th>Quantity</th>
                                             <th>Cost</th>
                                             <th class="text-center"><span class="fas fa-edit"></span></th>
@@ -311,7 +283,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-5" *ngIf="RequestID!=''">
+                    <div class="col-lg-8" *ngIf="RequestID!='' && showOtherCharges">
                         <div class="card mb-4">
                             <div class="card-header">
                                 Other Charges
@@ -347,7 +319,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-7" *ngIf="RequestID!=''">
+                    <div class="col-lg-8" *ngIf="RequestID!='' && showProgressNotes">
                         <div class="card mb-4">
                             <div class="card-header">
                                 Progress Notes
@@ -378,12 +350,7 @@
                             </div>
                         </div>
                     </div>
-
-                    <button (click)="CreateOffer()" style="font-size:16px" type="submit"
-                        class="btn btn-primary btn-user btn-block">
-                        <i style="margin-right:5px" class="fas fa-gear"></i>Calculate and Create Offer
-                    </button>
-                    <div class="col-lg-4" style="display:none;">
+                    <div class="col-lg-4" *ngIf="showSummary">
                         <div class="card mb-4">
                             <div class="card-header">
                                 Summary

@@ -15,6 +15,7 @@ import { FlightwareComponent } from './pages/flightware/flightware.component';
 import { AirportsComponent } from './pages/airports/airports.component';
 import { AirportSuggestionComponent } from './common/airport-suggestion/airport-suggestion.component';
 import { CustomersComponent } from './pages/customers/customers.component';
+import { SettingsComponent } from './settings/settings.component';
 
 
 const routes: Routes = [
@@ -109,6 +110,10 @@ const routes: Routes = [
   {
     path: "customers",
     component: CustomersComponent
+  },
+  {
+    path: "settings",
+    component: SettingsComponent
   }
 ];
 

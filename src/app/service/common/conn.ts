@@ -13,7 +13,7 @@ export class Connection
     static serverUrl: string = "https://www.g-bprojects.com/air-ambulance/service/"
     
     // Production Settings
-    // static baseUrl: string = "../service/operation/";
-    // static serverUrl: string = "../service/"
+    //static baseUrl: string = "../service/operation/";
+    //static serverUrl: string = "../service/"
 }
 

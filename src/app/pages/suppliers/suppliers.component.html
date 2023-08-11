@@ -5,10 +5,10 @@
             <app-topbar></app-topbar>
             <div class="container-fluid">
                 <div class="nav" style="margin-bottom:10px;">
-                    <span><a href="home">Dashboard</a></span> &nbsp; / &nbsp;<span>Suppliers</span>
+                    <span><a href="home">Dashboard</a></span> &nbsp; / &nbsp;<span>Vendors</span>
                 </div>
                 <!-- Page Heading -->
-                <h1 class="h3 mb-4 text-gray-800">Suppliers</h1>
+                <h1 class="h3 mb-4 text-gray-800">Vendors</h1>
                 <div class="row">
                     <div class="offset-lg-9 col-lg-3">
                         <a style="float:right;margin-bottom:10px;" class="btn btn-sm btn-outline-primary" routerLink="/supplier">+ Add Supplier</a>
@@ -24,7 +24,7 @@
                                 <form>
                                     <div class="row">                                       
                                         <div class="form-group col-lg-4">
-                                            <label for="">Supplier Name</label>
+                                            <label for="">Vendor Name</label>
                                             <input type="text" class="form-control" name="SupplierName"
                                                 [(ngModel)]="S_SupplierName">
                                         </div>
@@ -66,8 +66,8 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Supplier ID</th>
-                                            <th>Supplier Name</th>
+                                            <th>Vendor ID</th>
+                                            <th>Vendor Name</th>
                                             <th>Charge Per Mile</th>      
                                             <th>Status</th>                                      
                                             <th class="text-center"><span class="fas fa-edit"></span></th>

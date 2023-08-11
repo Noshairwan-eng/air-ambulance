@@ -771,7 +771,9 @@ export class RequestComponent implements OnInit {
     var blnRequestValid = true;
     this.CalculateTotals();
 
-
+    this.AirlineCostError = "";
+    this.EquipmentCostError = "";
+    this.OtherChargesError = "";
     if (this.TotalAirlineCost <= 0) {
       this.AirlineCostError = "There is not airline cost selected."
       blnRequestValid = false;
@@ -797,6 +799,33 @@ export class RequestComponent implements OnInit {
           //this.DeleteAirLineCostConfirm(airlineCost);
         }
       })
+    }
+    else
+    {
+      var lst = "";
+      lst += "<ul>";
+      if(this.TotalAirlineCost<=0)
+      {
+        lst += "<li style='text-align:left;'>"+this.AirlineCostError+"</li>";
+      }
+      if(this.TotalOtherCharges<=0)
+      {
+        lst += "<li style='text-align:left;'>"+this.OtherChargesError+"</li>";
+      }
+      if(this.TotalEquipmentCost<=0)
+      {
+        lst += "<li style='text-align:left;'>"+this.EquipmentCostError+"</li>";
+      }
+      lst += "</ul>"
+      Swal.fire({
+        title: 'Calculation Incomplete',
+        html: "Please clear the following errors before proceeding. "+lst,
+        icon: 'error',
+        showCancelButton: true,
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel'
+      })
+
     }
   }
 
