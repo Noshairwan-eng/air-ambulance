@@ -23,7 +23,8 @@ import { FlightwareComponent } from './pages/flightware/flightware.component';
 import { AirportsComponent } from './pages/airports/airports.component';
 import { AirportSuggestionComponent } from './common/airport-suggestion/airport-suggestion.component';
 import { CustomersComponent } from './pages/customers/customers.component';
-import { SettingsComponent } from './settings/settings.component';
+import { SettingsComponent } from './pages/settings/settings.component';
+import { CompleteFlightsComponent } from './pages/complete-flights/complete-flights.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { SettingsComponent } from './settings/settings.component';
     AirportsComponent,
     AirportSuggestionComponent,
     CustomersComponent,
-    SettingsComponent    
+    SettingsComponent,
+    CompleteFlightsComponent    
   ],
   imports: [
     BrowserModule,

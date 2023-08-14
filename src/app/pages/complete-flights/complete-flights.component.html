@@ -5,11 +5,11 @@
             <app-topbar></app-topbar>
             <div class="container-fluid">
                 <div class="nav" style="margin-bottom:10px;">
-                    <span><a href="home">Dashboard</a></span> &nbsp; / &nbsp;<span>Flight In Progress</span>
+                    <span><a href="home">Dashboard</a></span> &nbsp; / &nbsp;<span>Completed Flights</span>
                 </div>
                 <!-- Page Heading -->
-                <h1 class="h3 mb-4 text-gray-800">Flights In Progress</h1>
-                <div class="row">
+                <h1 class="h3 mb-4 text-gray-800">Completed Flights</h1>
+                <div class="row" style="display:none;">
                     <div class="col-lg-12">
                         <div class="card mb-4">
                             <div class="card-header">
@@ -53,7 +53,7 @@
                                                 [(ngModel)]="S_Status">
                                                 <option value=""></option>
                                                 <option value="0">Pending</option>
-                                                <option value="1">Invoiced</option>
+                                                <option value="1">Offer Created</option>
                                             </select>
                                         </div>
                                     </div>
@@ -96,7 +96,7 @@
                                             <th>Offer Amount</th>
                                             <th>Status</th>
                                             <th class="text-center"><span class="fas fa-edit"></span></th>
-                                            <th>Create Invoice</th>
+                                            <!-- <th>Create Invoice</th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -125,13 +125,13 @@
                                                     <span class="fas fa-edit"></span>
                                                 </a>
                                             </td>
-                                            <td class="text-center">
+                                            <!-- <td class="text-center">
                                                 <a *ngIf="offer.Status=='0'" (click)="CreateInvoice(offer)"
                                                     class="btn btn-sm btn-outline-primary">
                                                     <span class="fas fa-file"></span>
 
                                                 </a>
-                                            </td>
+                                            </td> -->
                                         </tr>
 
                                     </tbody>

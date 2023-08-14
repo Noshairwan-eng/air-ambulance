@@ -15,7 +15,8 @@ import { FlightwareComponent } from './pages/flightware/flightware.component';
 import { AirportsComponent } from './pages/airports/airports.component';
 import { AirportSuggestionComponent } from './common/airport-suggestion/airport-suggestion.component';
 import { CustomersComponent } from './pages/customers/customers.component';
-import { SettingsComponent } from './settings/settings.component';
+import { SettingsComponent } from './pages/settings/settings.component';
+import { CompleteFlightsComponent } from './pages/complete-flights/complete-flights.component';
 
 
 const routes: Routes = [
@@ -114,6 +115,10 @@ const routes: Routes = [
   {
     path: "settings",
     component: SettingsComponent
+  },
+  {
+    path: "completed-flights",
+    component: CompleteFlightsComponent
   }
 ];
 
