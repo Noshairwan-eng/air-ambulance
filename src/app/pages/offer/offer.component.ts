@@ -198,6 +198,36 @@ export class OfferComponent implements OnInit {
       })
 
   }
+
+  CloseOffer()
+  {
+    Swal.fire({
+      title: 'Close Offer',
+      text: "Are you sure you want to Close this offer?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, Close!',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.value) {
+        this.offerService.CloseOffer(this.OfferID, "")
+        .subscribe((res)=>{
+          if(res.status=="success")
+          {
+            Swal.fire("Offer Closed", "Offer closed successfully", "success");
+            this.GetOfferDetail();
+          }
+          else
+          {
+            Swal.fire("Proess Failed", res.error, "error");
+          }
+
+        })
+
+      }
+    })
+
+  }
   async PopulateOfferData() {
 
     this.Request = null;

@@ -108,5 +108,11 @@ export class OfferService {
     return this.http.get<any>(url);
   }
 
- 
+  CloseOffer(OfferID: string, CloseReason: string) {
+    let url = this.URL + "close.php?" + "uid=" + OfferID + "&reason=" + CloseReason + "&token=" + this.token.GetTokenObject().token;
+    console.log(url);
+    return this.http.get<any>(url);
+  }
+
+
 }

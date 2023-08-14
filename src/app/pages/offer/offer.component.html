@@ -127,21 +127,22 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    
-                                        <button class="btn btn-outline-primary btn-block"
-                                            (click)="OfferDocumentFile.click()">{{SelectedFileName}}</button>        
-                                        <input style="display:none;" type="file" class="form-control"
-                                            (change)="FileInputChange($event)" #OfferDocumentFile>
-                                    
+
+                                    <button class="btn btn-outline-primary btn-block"
+                                        (click)="OfferDocumentFile.click()">{{SelectedFileName}}</button>
+                                    <input style="display:none;" type="file" class="form-control"
+                                        (change)="FileInputChange($event)" #OfferDocumentFile>
+
                                     <div style="margin-top:10px;margin-bottom:10px;">
 
-                                        <button  style="float:right" class="btn btn-sm btn-outline-primary" *ngIf="loadingFileUpload" disabled>
+                                        <button style="float:right" class="btn btn-sm btn-outline-primary"
+                                            *ngIf="loadingFileUpload" disabled>
                                             <span class="fa fa-upload"></span> Uploading ..
                                         </button>
-                                        <button style="float:right" class="btn btn-sm btn-outline-primary" *ngIf="!loadingFileUpload"
-                                            (click)="UploadFile()">
+                                        <button style="float:right" class="btn btn-sm btn-outline-primary"
+                                            *ngIf="!loadingFileUpload" (click)="UploadFile()">
                                             <span class="fa fa-upload"></span> Upload
-                                        </button> 
+                                        </button>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -154,11 +155,14 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr  *ngFor="let ofd of OfferDocuments">
+                                            <tr *ngFor="let ofd of OfferDocuments">
                                                 <td></td>
-                                                <td> <a href="{{ServerUrl}}/{{ofd.FileName}}"><span>{{ofd.ActualFileName}}</span></a> </td>
+                                                <td> <a
+                                                        href="{{ServerUrl}}/{{ofd.FileName}}"><span>{{ofd.ActualFileName}}</span></a>
+                                                </td>
                                                 <td class="text-center">
-                                                    <button (click)="DeleteOfferDocument(ofd.uid)" class="btn btn-sm btn-outline-danger">
+                                                    <button (click)="DeleteOfferDocument(ofd.uid)"
+                                                        class="btn btn-sm btn-outline-danger">
                                                         <span class="fa fa-trash"></span>
                                                     </button>
                                                 </td>
@@ -168,6 +172,29 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="card mb-4" *ngIf="Offer.uid!=null && Offer.Status==0">
+                            <div class="card-header">
+                                Close Offer
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <select name="" id="" class="form-control" style="margin-bottom:10px">
+                                        <option value="reason"> Reason 1</option>
+                                        <option value="reason"> Reason 2</option>
+                                        <option value="reason"> Reason 3</option>
+                                        <option value="reason"> Reason 4</option>
+                                        <option value="reason"> Reason 5</option>
+                                        <option value="reason"> Reason 6</option>
+                                    </select>
+                                    
+                                    <button (click)="CloseOffer()" class="btn btn-outline-primary btn-block">Close Offer
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

@@ -25,6 +25,7 @@ import { AirportSuggestionComponent } from './common/airport-suggestion/airport-
 import { CustomersComponent } from './pages/customers/customers.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { CompleteFlightsComponent } from './pages/complete-flights/complete-flights.component';
+import { LostComponent } from './pages/lost/lost.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { CompleteFlightsComponent } from './pages/complete-flights/complete-flig
     AirportSuggestionComponent,
     CustomersComponent,
     SettingsComponent,
-    CompleteFlightsComponent    
+    CompleteFlightsComponent,
+    LostComponent    
   ],
   imports: [
     BrowserModule,

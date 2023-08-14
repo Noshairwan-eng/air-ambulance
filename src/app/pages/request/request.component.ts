@@ -175,12 +175,26 @@ export class RequestComponent implements OnInit {
           tempFormData.CallerEmail,
           tempFormData.CallerPhone,
           tempFormData.CallerRelation,
+
+          tempFormData.FacilityCallerName,
+          tempFormData.FacilityCallerFax,
+          tempFormData.FacilityCallerEmail,
+          tempFormData.FacilityCallerPhone,
+          tempFormData.FacilityCallerRelation,
+
           tempFormData.PatientName,
           tempFormData.PatientAge,
           tempFormData.PatientWeight,
           tempFormData.NoOfPassengers,
           tempFormData.MedicalBriefing,
           tempFormData.ReasonForTransport,
+
+          tempFormData.Vent,
+          tempFormData.Oxygen,
+          tempFormData.Monitor,
+          tempFormData.IV,
+          tempFormData.Other,
+
           tempFormData.ReferredBy
         )
         .subscribe((res: any) => {
@@ -390,6 +404,42 @@ export class RequestComponent implements OnInit {
           this.loadingSave = false;
           this.formSubmitted = false;
         });
+    }
+
+  }
+
+  CancelReason:string;
+
+  CancelRequest() {
+    console.log(this.CancelReason);
+    if (this.CancelReason != "") {
+      Swal.fire({
+        title: 'Close Quote',
+        text: "Are you sure you want to Close this Quote?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, Close!',
+        cancelButtonText: 'Cancel'
+      }).then((result) => {
+        if (result.value) {
+          this.requestService.CloseRequest(this.RequestID, this.CancelReason)
+            .subscribe((res) => {
+              if (res.status == "success") {
+                Swal.fire("Quote Closed", "Quote closed successfully", "success");
+                this.GetRequestDetail();
+              }
+              else {
+                Swal.fire("Proess Failed", res.error, "error");
+              }
+
+            })
+
+        }
+      })
+    }
+    else
+    {
+
     }
 
   }
@@ -666,12 +716,27 @@ export class RequestComponent implements OnInit {
       CallerEmail: [null, Validators.required],
       CallerPhone: [null, Validators.required],
       CallerRelation: [null, Validators.required],
+
+      FacilityCallerName: [null, null],
+      FacilityCallerFax: [null, null],
+      FacilityCallerEmail: [null, null],
+      FacilityCallerPhone: [null, null],
+      FacilityCallerRelation: [null, null],
+
+
       PatientName: [null, Validators.required],
       PatientAge: [null, Validators.required],
       PatientWeight: [null, Validators.required],
       NoOfPassengers: [null, Validators.required],
       MedicalBriefing: [null, null],
       ReasonForTransport: [null, null],
+
+      Vent: [null, null],
+      Oxygen: [null, null],
+      Monitor: [null, null],
+      IV: [null, null],
+      Other: [null, null],
+
       ReferredBy: [null, null]
     });
     // Building Air Line Cost Form
@@ -800,26 +865,22 @@ export class RequestComponent implements OnInit {
         }
       })
     }
-    else
-    {
+    else {
       var lst = "";
       lst += "<ul>";
-      if(this.TotalAirlineCost<=0)
-      {
-        lst += "<li style='text-align:left;'>"+this.AirlineCostError+"</li>";
+      if (this.TotalAirlineCost <= 0) {
+        lst += "<li style='text-align:left;'>" + this.AirlineCostError + "</li>";
       }
-      if(this.TotalOtherCharges<=0)
-      {
-        lst += "<li style='text-align:left;'>"+this.OtherChargesError+"</li>";
+      if (this.TotalOtherCharges <= 0) {
+        lst += "<li style='text-align:left;'>" + this.OtherChargesError + "</li>";
       }
-      if(this.TotalEquipmentCost<=0)
-      {
-        lst += "<li style='text-align:left;'>"+this.EquipmentCostError+"</li>";
+      if (this.TotalEquipmentCost <= 0) {
+        lst += "<li style='text-align:left;'>" + this.EquipmentCostError + "</li>";
       }
       lst += "</ul>"
       Swal.fire({
         title: 'Calculation Incomplete',
-        html: "Please clear the following errors before proceeding. "+lst,
+        html: "Please clear the following errors before proceeding. " + lst,
         icon: 'error',
         showCancelButton: true,
         confirmButtonText: 'OK',
@@ -852,22 +913,20 @@ export class RequestComponent implements OnInit {
 
 
       this.requestService.SendSupplierEmail(Email, FlyingFrom, FlyingTo, EmailBody)
-      .subscribe((res:any)=>{
-        console.log("my res", res);
-        if(res.status=="success")
-        {
-          Swal.fire("Email Sent", "Email is sent to supplier.", "success");
-          this.EmailSupplierForm.reset();
-        }
-        else
-        {
+        .subscribe((res: any) => {
+          console.log("my res", res);
+          if (res.status == "success") {
+            Swal.fire("Email Sent", "Email is sent to supplier.", "success");
+            this.EmailSupplierForm.reset();
+          }
+          else {
 
-          Swal.fire("Process Failed", "Failed to send email." , "error");
-          this.hideEmailSupplierModal();
-        }
-        this.emailSupplierFormSubmitted = false;
-        this.loadingSendSupplierEmail = false;
-      })
+            Swal.fire("Process Failed", "Failed to send email.", "error");
+            this.hideEmailSupplierModal();
+          }
+          this.emailSupplierFormSubmitted = false;
+          this.loadingSendSupplierEmail = false;
+        })
     }
 
   }

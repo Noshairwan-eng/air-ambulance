@@ -39,7 +39,7 @@ export class RequestService {
     url = url + "Status=" + Status;
 
 
-    //console.log("URL",url);
+    console.log("URL",url);
     return this.http.get<any>(url);
   }
 
@@ -54,12 +54,26 @@ export class RequestService {
       CallerEmail: string,
       CallerPhone: string,
       CallerRelation: string,
+      
+      FacilityCallerName: string,
+      FacilityCallerFax: string,
+      FacilityCallerEmail: string,
+      FacilityCallerPhone: string,
+      FacilityCallerRelation: string,
+
       PatientName: string,
       PatientAge: string,
       PatientWeight: string,
       NoOfPassengers: string,
       MedicalBriefing: string,
       ReasonForTransport: string,
+
+      Vent: string,
+      Oxygen: string,
+      Monitor: string,
+      IV: string,
+      Other: string,
+
       ReferredBy: string
     ) {
 
@@ -82,12 +96,26 @@ export class RequestService {
     formData.append("CallerEmail", CallerEmail);
     formData.append("CallerPhone", CallerPhone);
     formData.append("CallerRelation", CallerRelation);
+
+    formData.append("FacilityCallerName", FacilityCallerName);
+    formData.append("FacilityCallerFax", FacilityCallerFax);
+    formData.append("FacilityCallerEmail", FacilityCallerEmail);
+    formData.append("FacilityCallerPhone", FacilityCallerPhone);
+    formData.append("FacilityCallerRelation", FacilityCallerRelation);
+
     formData.append("PatientName", PatientName);
     formData.append("PatientAge", PatientAge);
     formData.append("PatientWeight", PatientWeight);
     formData.append("NoOfPassengers", NoOfPassengers);
     formData.append("MedicalBriefing", MedicalBriefing);
     formData.append("ReasonForTransport", ReasonForTransport);
+
+    formData.append("Vent", Vent);
+    formData.append("Oxygen", Oxygen);
+    formData.append("Monitor", Monitor);
+    formData.append("IV", IV);
+    formData.append("Other", Other);
+
     formData.append("ReferredBy", ReferredBy);
 
 
@@ -117,6 +145,12 @@ export class RequestService {
     console.log("URL",url);
     return this.http.get<any>(url);
 
+  }
+
+  CloseRequest(RequestID: string, CloseReason: string) {
+    let url = this.URL + "close.php?" + "uid=" + RequestID + "&reason=" + CloseReason + "&token=" + this.token.GetTokenObject().token;
+    console.log(url);
+    return this.http.get<any>(url);
   }
 
 }
