@@ -28,6 +28,7 @@ export class RequestsComponent {
      private requestService: RequestService
    )
    {
+    this.GetRequests();
      
 
    }

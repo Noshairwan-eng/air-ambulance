@@ -43,22 +43,6 @@
                         </div>
                     </div>
                     <form [formGroup]="RequestForm" (ngSubmit)="SaveRequest()" class="user">
-
-                        <div class="row">
-                            
-                            <div class="offset-lg-9 col-lg-3">
-                                <button *ngIf="loadingSave" style="font-size:16px" type="submit"
-                                    class="btn btn-primary btn-user btn-block" disabled>
-                                    <i style="margin-right:5px" class="fas fa-save"></i>Saving Request Data
-                                </button>
-                                <button *ngIf="!loadingSave" style="font-size:16px" type="submit"
-                                    class="btn btn-primary btn-user btn-block">
-                                    <i style="margin-right:5px"
-                                        class="fas fa-save"></i>{{(RequestID=="")?"Save":"Update"}}
-                                </button>
-                            </div>
-                        </div>
-                        <br>
                         <div class="row">
                             <!-- BASIC INFORMATION -->
                             <div class="col-lg-12">
@@ -296,6 +280,20 @@
 
                             </div>
                         </div>
+                        <div class="row">                            
+                            <div class="offset-lg-9 col-lg-3">
+                                <button *ngIf="loadingSave" style="font-size:16px" type="submit"
+                                    class="btn btn-primary btn-user btn-block" disabled>
+                                    <i style="margin-right:5px" class="fas fa-save"></i>Saving Request Data
+                                </button>
+                                <button *ngIf="!loadingSave" style="font-size:16px" type="submit"
+                                    class="btn btn-primary btn-user btn-block">
+                                    <i style="margin-right:5px"
+                                        class="fas fa-save"></i>{{(RequestID=="")?"Save":"Update"}}
+                                </button>
+                            </div>
+                        </div>
+                        <br>
 
                     </form>
                     <div class="col-lg-12" *ngIf="RequestID==''">
@@ -477,7 +475,7 @@
                         </div>
                     </div>
 
-                    <button (click)="CreateOffer()" style="font-size:16px" type="submit"
+                    <button *ngIf="RequestID!=''" (click)="CreateOffer()" style="font-size:16px" type="submit"
                         class="btn btn-primary btn-user btn-block">
                         <i style="margin-right:5px" class="fas fa-gear"></i>Calculate and Create Offer
                     </button>

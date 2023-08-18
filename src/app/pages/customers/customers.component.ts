@@ -28,7 +28,7 @@ export class CustomersComponent {
      private requestService: RequestService
    )
    {
-     
+     this.GetRequests();
 
    }
 

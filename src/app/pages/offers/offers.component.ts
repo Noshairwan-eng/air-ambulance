@@ -30,6 +30,7 @@ export class OffersComponent {
     private offerService: OfferService,
     private router: Router
   ) {
+    this.GetOffers();
     
   }
 

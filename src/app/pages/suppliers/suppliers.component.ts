@@ -24,7 +24,7 @@ export class SuppliersComponent {
     private supplierService: SupplierService,
     private router: Router
   ) {
-    
+    this.GetSuppliers();
   }
 
 
