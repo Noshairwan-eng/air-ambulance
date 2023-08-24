@@ -408,7 +408,7 @@ export class RequestComponent implements OnInit {
 
   }
 
-  CancelReason:string;
+  CancelReason: string;
 
   CancelRequest() {
     console.log(this.CancelReason);
@@ -437,8 +437,7 @@ export class RequestComponent implements OnInit {
         }
       })
     }
-    else
-    {
+    else {
 
     }
 
@@ -710,6 +709,7 @@ export class RequestComponent implements OnInit {
     this.RequestForm = this.formBuidler.group({
       ServiceType: [null, Validators.required],
       FlyingFrom: [null, Validators.required],
+      EstimatePrice: [null, null],
       FlyingTo: [null, Validators.required],
       CallerName: [null, Validators.required],
       CallerFax: [null, null],
