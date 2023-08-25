@@ -8,6 +8,8 @@ import { OtherchargesService } from 'src/app/service/othercharges/othercharges.s
 import { EquipmentsService } from 'src/app/service/equipments/equipments.service';
 import { ProgressnotesService } from 'src/app/service/progressnotes/progressnotes.service';
 import { AirportService } from 'src/app/service/airport/airport.service';
+import { airportdata } from 'src/app/common/airportdata/airportdata';
+import { SettingsService } from 'src/app/service/settings/settings.service';
 declare var $: any;
 
 
@@ -78,6 +80,10 @@ export class RequestComponent implements OnInit {
   FilteredAirportsFrom: Array<any> = [];
   FilteredAirportsTo: Array<any> = [];
 
+  SelectedFromAirport: any = null;
+  SelectedToAirport: any = null;
+  Settings:any = null;
+
   TotalAirlineCost = 0.00;
   TotalEquipmentCost = 0.00;
   TotalOtherCharges = 0.00;
@@ -98,10 +104,21 @@ export class RequestComponent implements OnInit {
     private equipmentsService: EquipmentsService,
     private progressnotesService: ProgressnotesService,
     private airportService: AirportService,
+    private settingsService: SettingsService,
     private router: Router,
     private route: ActivatedRoute
   ) {
-    //this.GetAirports();
+
+    // Getting pre loaded airports or fetching again if not available.
+    this.Airports = airportdata.Airports;
+    if (this.Airports.length <= 0) {
+      this.GetAirports();
+    }
+
+    // Getting Settings
+    this.GetSettings();
+
+
     this.requestService
     this.RequestID = this.route.snapshot.paramMap.get("id");
     if (this.RequestID !== null && this.RequestID !== "") {
@@ -340,6 +357,17 @@ export class RequestComponent implements OnInit {
       Selected: "0"
 
     }
+  }
+
+  GetSettings()
+  {
+    this.settingsService.FetchSettings()
+    .subscribe((res:any)=>{
+      if(res.status=="success")
+      {
+        this.Settings = res.data;
+      }
+    }) 
   }
 
   //#endregion 
@@ -639,24 +667,18 @@ export class RequestComponent implements OnInit {
 
   //#region Handling Aiports and Suggestions
 
-  GetAirports(AirportName: string, ListType: string) {
+  GetAirports() {
     this.loadingAirports = true;
-
-    //console.log("getting airports");
-    this.airportService.FetchAirports("", "", "", AirportName, "", "")
+    console.log("Fetching Airports again");
+    this.airportService.FetchAirports("", "", "", "")
       .subscribe((res: any) => {
         if (res.status == "success") {
-          //this.Airports = res.data;
-          if (ListType == "from") {
-            this.FilteredAirportsFrom = res.data;
-          }
-          else if (ListType == "to") {
-            this.FilteredAirportsTo = res.data;
-          }
-          console.log("fetched");
-          //console.log(this.Airports);
+          this.Airports = res.data;
+          airportdata.Airports = res.data;
+          airportdata.FetchStatus = 2;
         }
         else {
+          airportdata.FetchStatus = 0;
           console.log(res);
         }
         this.loadingAirports = false;
@@ -664,40 +686,75 @@ export class RequestComponent implements OnInit {
   }
 
   SelectAirportFrom(airport: any) {
-    this.RequestDetail.FlyingFrom = airport.AirportName;
+    this.SelectedFromAirport = airport;
+    this.RequestDetail.FlyingFrom = airport.Name;
     this.IsFlyingFromFocused = false;
+
+    this.CalculateEstimatePrice();
   }
   SelectAirportTo(airport: any) {
-    this.RequestDetail.FlyingTo = airport.AirportName;
+    this.SelectedToAirport = airport;
+    this.RequestDetail.FlyingTo = airport.Name;
     this.IsFlyingToFocused = false;
+
+    this.CalculateEstimatePrice();
   }
+
+  CalculateEstimatePrice() {
+    if (this.SelectedFromAirport != null && this.SelectedToAirport != null) {
+      const lat1: number = this.SelectedFromAirport.Latitude;
+      const lat2: number = this.SelectedToAirport.Latitude;
+      const long1: number = this.SelectedFromAirport.Longitude;
+      const long2: number = this.SelectedToAirport.Longitude;
+      const radians: number = 0.017453333;
+      const radiusEarth: number = 3959;
+      const costPerMile = Number(this.Settings[0].CostPerMile);
+
+      var distance =
+        Math.acos(
+          Math.sin(lat1 * radians) * Math.sin(lat2 * radians) +
+          Math.cos(lat1 * radians) * Math.cos(lat2 * radians) * Math.cos(Math.abs(long1 * radians - long2 * radians))
+        ) * radiusEarth;
+
+      this.RequestDetail.EstimateCost = (costPerMile * distance).toFixed(2);
+      console.log("Total Distance : ", distance);
+    }
+    else {
+      console.log("Some of the airport is not selected.")
+    }
+
+
+  }
+
 
   FlyingFromInputChange(event: any) {
     const inputValue = event.target.value;
-    // this.FilteredAirportsFrom = this.Airports.filter((airport) => {
-    //   return (
-    //     airport.AirportName.toLowerCase().startsWith(inputValue.toLowerCase())
-    //     ||
-    //     airport.IATACode.toLowerCase().startsWith(inputValue.toLowerCase())
-    //     ||
-    //     airport.ICAOCode.toLowerCase().startsWith(inputValue.toLowerCase())
-    //   );
-    // });
-    this.GetAirports(inputValue, "from");
+    this.FilteredAirportsFrom = this.Airports.filter((airport) => {
+      return (
+        airport.Name.toLowerCase().startsWith(inputValue.toLowerCase())
+        ||
+        airport.IATACode.toLowerCase().startsWith(inputValue.toLowerCase())
+        ||
+        airport.Identity.toLowerCase().startsWith(inputValue.toLowerCase())
+      );
+    });
+
+    //console.log("0000: from Filtered Airports:", this.FilteredAirportsFrom);
+    //this.GetAirports(inputValue, "from");
 
   }
   FlyingToInputChange(event: any) {
     const inputValue = event.target.value;
-    // this.FilteredAirportsTo = this.Airports.filter((airport) => {
-    //   return (
-    //     airport.AirportName.toLowerCase().startsWith(inputValue.toLowerCase())
-    //     ||
-    //     airport.IATACode.toLowerCase().startsWith(inputValue.toLowerCase())
-    //     ||
-    //     airport.ICAOCode.toLowerCase().startsWith(inputValue.toLowerCase())
-    //   );
-    // });
-    this.GetAirports(inputValue, "to");
+    this.FilteredAirportsTo = this.Airports.filter((airport) => {
+      return (
+        airport.Name.toLowerCase().startsWith(inputValue.toLowerCase())
+        ||
+        airport.IATACode.toLowerCase().startsWith(inputValue.toLowerCase())
+        ||
+        airport.Identity.toLowerCase().startsWith(inputValue.toLowerCase())
+      );
+    });
+    //this.GetAirports(inputValue, "to");
   }
   //#endregion
 

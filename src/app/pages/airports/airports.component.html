@@ -19,8 +19,8 @@
                                 <form>
                                     <div class="row">
                                         <div class="form-group col-lg-2">
-                                            <label for="">ICAO Code</label>
-                                            <input class="form-control" name="OfferID" [(ngModel)]="S_ICAOCode"> 
+                                            <label for="">Identity</label>
+                                            <input class="form-control" name="Identity" [(ngModel)]="S_Identity"> 
                                         </div>
                                         <div class="form-group col-lg-2">
                                             <label for="">IATA Code</label>
@@ -29,15 +29,7 @@
                                         <div class="form-group col-lg-2">
                                             <label for="">Airport Name</label>
                                             <input type="text" class="form-control" name="AirportName" [(ngModel)]="S_AirportName">
-                                        </div>
-                                        <div class="form-group col-lg-2">
-                                            <label for="">City</label>
-                                            <input type="text" class="form-control" name="City" [(ngModel)]="S_City">
-                                        </div>
-                                        <div class="form-group col-lg-2">
-                                            <label for="">Country</label>
-                                            <input type="text" class="form-control" name="Country" [(ngModel)]="S_Country">
-                                        </div>                                      
+                                        </div>                                                                             
                                     </div>
                                     <div class="row">
                                         <div class="offset-lg-10 col-lg-2">
@@ -64,15 +56,16 @@
                                 <!-- <button (click)="AddAirLineCost()" style="margin-bottom:5px;width:40px;"
                                     class="btn btn-sm btn-outline-primary"><span class="fas fa-plus"></span></button> -->
                                 <app-loader *ngIf="loadingAirports"></app-loader>
-                                <table *ngIf="!loadingAirports" class="table table-hover">
+                                <table *ngIf="!loadingAirports" class="table table-hover" style="font-size:15px;">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>ICAO</th>
+                                            <th>Identity</th>
                                             <th>IATA</th>
                                             <th>Airport Name</th>
-                                            <th>City</th>
-                                            <th>Country</th>
+                                            <th>ISO Country</th>
+                                            <th>ISO Region</th>
+                                            <th>Muncipality</th>
                                             <th>Lat</th>
                                             <th>Long</th>
                                         </tr>
@@ -80,13 +73,14 @@
                                     <tbody>
                                         <tr *ngFor="let airport of Airports">
                                             <td></td>
-                                            <td>{{airport.ICAOCode}}</td>
+                                            <td>{{airport.Identity}}</td>
                                             <td>{{airport.IATACode}}</td>
-                                            <td>{{(airport.AirportName=="N/A")?airport.City+", "+airport.Country : airport.AirportName}}</td>
-                                            <td>{{airport.City}}</td>
-                                            <td>{{airport.Country}}</td>
-                                            <td>{{airport.LatitudeDecimalDegrees}}</td>                                            
-                                            <td>{{airport.LongitudeDecimalDegrees}}</td>
+                                            <td>{{airport.Name}}</td>
+                                            <td>{{airport.ISOCountry}}</td>
+                                            <td>{{airport.ISORegion}}</td>
+                                            <td>{{airport.Muncipality}}</td>
+                                            <td>{{airport.Latitude}}</td>                                            
+                                            <td>{{airport.Longitude}}</td>
                                         </tr>
 
                                     </tbody>

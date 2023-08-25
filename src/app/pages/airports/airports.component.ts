@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { airportdata } from 'src/app/common/airportdata/airportdata';
 import { AirportService } from 'src/app/service/airport/airport.service';
 import Swal from 'sweetalert2';
 
@@ -12,12 +13,9 @@ export class AirportsComponent {
 
   // Search Criteria Filters
   S_AirportID:string = "";
-  S_AirportName:string = "";
-  S_ICAOCode:string = "";
+  S_Identity:string = "";
+  S_AirportName:string = "";  
   S_IATACode:string = "";
-  S_AiportName:string = "";
-  S_City:string = "";
-  S_Country:string = "";
   
   // Loading Flags
   loadingAirports: boolean = false;
@@ -30,7 +28,7 @@ export class AirportsComponent {
     private airportService: AirportService,
     private router: Router
   ) {
-    
+    this.Airports = airportdata.Airports;    
   }
 
 
@@ -41,16 +39,15 @@ export class AirportsComponent {
     this.loadingAirports = true;
     this.airportService.FetchAirports(
       this.S_AirportID,
-      this.S_ICAOCode,
+      this.S_Identity,
       this.S_IATACode,
-      this.S_AirportName,
-      this.S_City,
-      this.S_Country
+      this.S_AirportName    
     )
       .subscribe((res: any) => {
         if (res.status == "success") {
           this.Airports = res.data;
-          //console.log(this.Requests);
+          airportdata.Airports = this.Airports;
+          airportdata.FetchStatus = 2;          
         }
         else {
           console.log(res);

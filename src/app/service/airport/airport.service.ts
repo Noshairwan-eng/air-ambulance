@@ -75,20 +75,16 @@ export class AirportService  {
 
   FetchAirports(
     AirportID: string,
-    ICAOCode: string,
+    Identity: string,
     IATACode: string,
-    AirportName: string,
-    City: string,
-    Country: string    
+    AirportName: string      
   ) {
     let url = this.URL + "get.php?";
     url = url + "token=" + this.token.GetTokenObject().token + "&";
     url = url + "uid=" + AirportID + "&";
-    url = url + "ICAOCode=" + ICAOCode + "&";
+    url = url + "Identity=" + Identity + "&";
     url = url + "IATACode=" + IATACode + "&";
-    url = url + "AirportName=" + AirportName + "&";
-    url = url + "City=" + City + "&";
-    url = url + "Country=" + Country;
+    url = url + "Name=" + AirportName;
 
     console.log("URL", url);
     return this.http.get<any>(url);
