@@ -22,38 +22,45 @@
                                             <label for="">Service Type</label>
                                             <select class="form-control" name="ServiceType" [(ngModel)]="S_ServiceType">
                                                 <option value=""></option>
-                                                    <option value="Air Ambulance"> Air Ambulance</option>
-                                                    <option value="Com Stretcher"> Com Stretcher</option>
-                                                    <option value="Med Escort"> Med Escort</option>
+                                                <option value="Air Ambulance"> Air Ambulance</option>
+                                                <option value="Com Stretcher"> Com Stretcher</option>
+                                                <option value="Med Escort"> Med Escort</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-lg-4">
                                             <label for="">Flying From</label>
-                                            <input type="text" class="form-control" name="FlyingFrom"  [(ngModel)]="S_FlyingFrom">
+                                            <input type="text" class="form-control" name="FlyingFrom"
+                                                [(ngModel)]="S_FlyingFrom">
                                         </div>
                                         <div class="form-group col-lg-4">
                                             <label for="">Flying To</label>
-                                            <input type="text" class="form-control" name="FlyingTo" [(ngModel)]="S_FlyingTo">
+                                            <input type="text" class="form-control" name="FlyingTo"
+                                                [(ngModel)]="S_FlyingTo">
                                         </div>
                                         <div class="form-group col-lg-4">
                                             <label for="">Patient Name</label>
-                                            <input type="text" class="form-control" name="PatientName" [(ngModel)]="S_PatientName">
+                                            <input type="text" class="form-control" name="PatientName"
+                                                [(ngModel)]="S_PatientName">
                                         </div>
                                         <div class="form-group col-lg-4">
                                             <label for="">Caller Name</label>
-                                            <input type="text" class="form-control" name="CallerName" [(ngModel)]="S_CallerName">
+                                            <input type="text" class="form-control" name="CallerName"
+                                                [(ngModel)]="S_CallerName">
                                         </div>
                                         <div class="form-group col-lg-4">
                                             <label for="">Caller Email</label>
-                                            <input type="text" class="form-control" name="CallerEmail" [(ngModel)]="S_CallerEmail">
+                                            <input type="text" class="form-control" name="CallerEmail"
+                                                [(ngModel)]="S_CallerEmail">
                                         </div>
                                         <div class="form-group col-lg-4">
                                             <label for="">Caller Phone</label>
-                                            <input type="text" class="form-control" name="CallerPhone" [(ngModel)]="S_CallerPhone">
+                                            <input type="text" class="form-control" name="CallerPhone"
+                                                [(ngModel)]="S_CallerPhone">
                                         </div>
                                         <div class="form-group col-lg-4">
                                             <label for="">Status</label>
-                                            <select name="" id="" class="form-control" name="Status" [(ngModel)]="S_Status">
+                                            <select name="" id="" class="form-control" name="Status"
+                                                [(ngModel)]="S_Status">
                                                 <option value=""></option>
                                                 <option value="0">Pending</option>
                                                 <option value="1">Offer Created</option>
@@ -62,7 +69,8 @@
                                     </div>
                                     <div class="row">
                                         <div class="offset-lg-10 col-lg-2">
-                                            <button (click)="GetRequests()" style="float:right" class="btn btn-outline-primary">
+                                            <button (click)="GetRequests()" style="float:right"
+                                                class="btn btn-outline-primary">
                                                 <span class="fa fa-search"></span>
                                                 Search
                                             </button>
@@ -80,7 +88,7 @@
                             <div class="card-header">
                                 Available Requests
                             </div>
-                            <div class="card-body">
+                            <div class="card-body" style="overflow-x:auto;">
                                 <!-- <button (click)="AddAirLineCost()" style="margin-bottom:5px;width:40px;"
                                     class="btn btn-sm btn-outline-primary"><span class="fas fa-plus"></span></button> -->
                                 <app-loader *ngIf="loadingRequests"></app-loader>
@@ -88,7 +96,7 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Request ID</th>
+                                            <th class="text-center"><span class="fas fa-edit"></span></th>
                                             <th>Service Type</th>
                                             <th>Flying From</th>
                                             <th>Flying To</th>
@@ -96,13 +104,17 @@
                                             <th>Caller Contant</th>
                                             <th>Caller Email</th>
                                             <th>Status</th>
-                                            <th class="text-center"><span class="fas fa-edit"></span></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let request of Requests">
-                                            <td></td>
                                             <td>{{request.uid}}</td>
+                                            <td class="text-center">
+                                                <a routerLink="/request/{{request.uid}}"
+                                                    class="btn btn-sm btn-outline-primary">
+                                                    <span class="fas fa-edit"></span>
+                                                </a>
+                                            </td>
                                             <td>{{request.ServiceType}}</td>
                                             <td>{{request.FlyingFrom}}</td>
                                             <td>{{request.FlyingTo}}</td>
@@ -110,17 +122,14 @@
                                             <td>{{request.CallerPhone}}</td>
                                             <td>{{request.CallerEmail}}</td>
                                             <td>
-                                                <span class="label label-primary" *ngIf="request.Status=='0'">pending</span>
-                                                <span class="label label-primary" *ngIf="request.Status=='1'">offer created</span>
-                                                <span class="label label-primary" *ngIf="request.Status=='2'">cancelled</span>
+                                                <span class="label label-primary"
+                                                    *ngIf="request.Status=='0'">pending</span>
+                                                <span class="label label-primary" *ngIf="request.Status=='1'">offer
+                                                    created</span>
+                                                <span class="label label-primary"
+                                                    *ngIf="request.Status=='2'">cancelled</span>
                                             </td>
-                                            <td class="text-center">
-                                                <a 
-                                                routerLink="/request/{{request.uid}}"
-                                                    class="btn btn-sm btn-outline-primary">
-                                                    <span class="fas fa-edit"></span>
-                                                </a>
-                                            </td>
+
                                         </tr>
 
                                     </tbody>
